@@ -1,11 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  // Utilise la version d'API par défaut compatible avec stripe@20.4.0
-});
+// Initialisation conditionnelle de Stripe pour éviter les erreurs de build
+const getStripe = () => {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return null;
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    // Utilise la version d'API par défaut compatible avec stripe@20.4.0
+  });
+};
 
 export async function POST(request: NextRequest) {
+  const stripe = getStripe();
+
+  if (!stripe) {
+    return NextResponse.json({ error: 'Stripe non configuré' }, { status: 503 });
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const priceId = searchParams.get('priceId') || process.env.STRIPE_PRICE_ID;
