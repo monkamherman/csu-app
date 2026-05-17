@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-background: 250 252 251;
+    --color-foreground: 15 23 42;
+    --color-surface: 255 255 255;
+    --color-surface-alt: 238 246 249;
+    --color-border: 210 226 229;
+    --color-muted: 94 112 125;
+    --color-primary: 0 107 95;
+    --color-primary-strong: 4 73 91;
+    --color-secondary: 0 159 227;
+    --color-secondary-strong: 9 92 158;
+    --color-tertiary: 222 99 59;
+    --color-tertiary-strong: 161 63 28;
+    --shadow-card: 0 30px 80px rgba(15, 23, 42, 0.12);
+    --shadow-soft: 0 18px 48px rgba(15, 23, 42, 0.08);
+    --font-sans: "IBM Plex Sans", "Aptos", "Segoe UI", sans-serif;
+    --font-display: "Space Grotesk", "Avenir Next", "Trebuchet MS", sans-serif;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply bg-background;
+  }
+
+  body {
+    @apply min-h-screen bg-background text-foreground antialiased;
+    font-family: var(--font-sans), sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), sans-serif;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-2xl border border-border bg-white px-6 py-3 text-center text-base font-semibold leading-snug text-foreground shadow-soft transition duration-200 ease-in hover:-translate-y-0.5 hover:bg-surface-alt focus:outline-none focus:ring-2 focus:ring-primary/35;
+  }
+
+  .btn-ghost {
+    @apply border-none bg-transparent text-muted-foreground shadow-none hover:text-foreground;
+  }
+
+  .btn-primary {
+    @apply border-primary bg-primary text-white hover:border-primary-strong hover:bg-primary-strong hover:text-white;
+  }
+
+  .card {
+    @apply w-full rounded-[32px] border border-border bg-white px-6 py-8 shadow-soft backdrop-blur;
+  }
+
+  .ribbon {
+    @apply absolute top-[19px] right-[-21px] block w-full rotate-45 bg-green-700 text-center text-[10px] font-bold uppercase leading-5 text-white shadow-[0_3px_10px_-5px_rgba(0,0,0,0.3)] before:absolute before:left-0 before:top-full before:z-[-1] before:border-[3px] before:border-r-transparent before:border-b-transparent before:border-l-green-800 before:border-t-green-800 before:content-[''] after:absolute after:right-0 after:top-full after:z-[-1] after:border-[3px] after:border-l-transparent after:border-b-transparent after:border-r-green-800 after:border-t-green-800 after:content-[''];
+  }
+
+  .input {
+    @apply block w-full rounded-2xl border border-border bg-surface px-4 py-3 text-base text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-4 focus:ring-primary/10;
+  }
+}

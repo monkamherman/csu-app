@@ -1,0 +1,68 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rage-site
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:7500:7500'
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    volumes:
+      # Volume pour les logs persistants
+      - app-logs:/app/logs
+      # Volume pour le cache Next.js (optionnel mais recommandé pour les performances)
+      - app-cache:/app/.next/cache
+    networks:
+      - tailnext-network
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "require('http').get('http://localhost:7500/api/health', (r) => r.statusCode === 200 ? process.exit(0) : process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # Service optionnel pour la gestion des backups du stockage
+  backup:
+    image: alpine:latest
+    container_name: rage-site-backup
+    restart: 'no'
+    volumes:
+      - app-logs:/data/logs:ro
+      - backup-storage:/backups
+    command: >
+      sh -c "
+        apk add --no-cache tar gzip &&
+        echo 'Service de backup configuré. Exécutez: docker-compose exec backup sh' &&
+        tail -f /dev/null
+      "
+    profiles:
+      - backup
+
+volumes:
+  app-logs:
+    driver: local
+  app-cache:
+    driver: local
+  backup-storage:
+    driver: local
+
+networks:
+  tailnext-network:
+    driver: bridge

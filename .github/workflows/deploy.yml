@@ -1,0 +1,177 @@
+name: CI/CD - Déploiement VPS
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # Étape 1: Tests et Lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Cache des dépendances
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Installation des dépendances
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Check Prettier
+        run: bun run prettier:check
+
+  # Étape 2: Build de l'image Docker
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push'
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extraction des métadonnées
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build et push de l'image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
+
+  # Étape 3: Déploiement sur VPS
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    environment:
+      name: production
+      url: https://${{ vars.DOMAIN }}
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Déploiement sur VPS via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script: |
+            # Configuration des variables
+            export PROJECT_NAME="tailnext"
+            export DEPLOY_DIR="/opt/$PROJECT_NAME"
+            export REGISTRY="${{ env.REGISTRY }}"
+            export IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
+            export TAG="latest"
+
+            echo "🚀 Début du déploiement..."
+
+            # Création du répertoire de déploiement si inexistant
+            sudo mkdir -p $DEPLOY_DIR
+            sudo chown $(whoami):$(whoami) $DEPLOY_DIR
+
+            # Navigation vers le répertoire de déploiement
+            cd $DEPLOY_DIR
+
+            # Pull de la dernière image
+            echo "📥 Pull de l'image Docker..."
+            docker pull $IMAGE:$TAG
+
+            # Arrêt des conteneurs existants
+            echo "🛑 Arrêt des conteneurs existants..."
+            docker-compose down --remove-orphans || true
+
+            # Suppression des images obsolètes
+            echo "🧹 Nettoyage des images..."
+            docker image prune -af --filter "until=168h" || true
+
+            # Mise à jour du docker-compose.yml si nécessaire
+            if [ -f docker-compose.yml ]; then
+              echo "📝 Mise à jour de docker-compose.yml..."
+              # Remplacement de l'image dans le docker-compose
+              sed -i "s|image:.*|image: $IMAGE:$TAG|" docker-compose.yml || true
+            fi
+
+            # Démarrage des nouveaux conteneurs
+            echo "▶️ Démarrage des conteneurs..."
+            docker-compose up -d --remove-orphans
+
+            # Vérification de la santé
+            echo "🏥 Vérification de la santé..."
+            sleep 10
+            
+            # Healthcheck avec retry
+            for i in {1..5}; do
+              if curl -sf http://localhost:3000/api/health > /dev/null 2>&1 || \
+                 curl -sf http://127.0.0.1:3000 > /dev/null 2>&1; then
+                echo "✅ Application healthy!"
+                break
+              fi
+              echo "⏳ Attente du healthcheck (tentative $i/5)..."
+              sleep 5
+            done
+
+            # Affichage des logs en cas d'échec
+            if ! curl -sf http://localhost:3000 > /dev/null 2>&1; then
+              echo "❌ Healthcheck failed! Logs:"
+              docker-compose logs --tail=50
+              exit 1
+            fi
+
+            echo "✅ Déploiement terminé avec succès!"
+
+      - name: Notification de succès
+        if: success()
+        run: |
+          echo "🎉 Déploiement réussi sur ${{ vars.DOMAIN }}"
+
+      - name: Notification d'échec
+        if: failure()
+        run: |
+          echo "❌ Échec du déploiement"

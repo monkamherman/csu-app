@@ -1,0 +1,50 @@
+name: Verify Docker Build
+
+on:
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - '.dockerignore'
+      - 'src/**'
+      - 'app/**'
+      - 'package.json'
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image (sans push)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          load: true
+          tags: tailnext:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Test de l'image
+        run: |
+          # Démarrer le conteneur
+          docker run -d --name tailnext-test -p 3000:3000 tailnext:test
+          
+          # Attendre que l'application démarre
+          sleep 15
+          
+          # Test de healthcheck
+          docker ps | grep tailnext-test
+          
+          # Vérifier que le conteneur est healthy
+          docker inspect --format='{{.State.Status}}' tailnext-test | grep -q "running"
+          
+          # Nettoyage
+          docker stop tailnext-test
+          docker rm tailnext-test
