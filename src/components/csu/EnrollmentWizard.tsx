@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { CheckCircle2, ChevronLeft, ChevronRight, CreditCard, MapPinned, Sparkles } from 'lucide-react';
 
@@ -124,20 +125,18 @@ export default function EnrollmentWizard() {
       <div className="overflow-hidden rounded-[36px] bg-gradient-to-br from-primary to-primary-strong p-8 text-white shadow-card">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
-            <p className="text-sm uppercase tracking-[0.24em] text-white/72">Enrolement CSU Test</p>
-            <h2 className="mt-3 font-display text-3xl font-bold md:text-5xl">
-              Processus d enrolement patient en 3 etapes
-            </h2>
+            <p className="text-sm uppercase tracking-[0.24em] text-white/72">{dictionary.enrollment.heroEyebrow}</p>
+            <h2 className="mt-3 font-display text-3xl font-bold md:text-5xl">{dictionary.enrollment.heroTitle}</h2>
             <p className="mt-4 max-w-2xl text-base leading-7 text-white/80">
-              Provenance du patient, rattachement au programme CSU, puis confirmation du paiement dans un meme flux.
+              {dictionary.enrollment.heroDescription}
             </p>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-3">
             {[
-              { id: 1, icon: MapPinned, label: 'Provenance' },
-              { id: 2, icon: Sparkles, label: 'Programme' },
-              { id: 3, icon: CreditCard, label: 'Paiement' },
+              { id: 1, icon: MapPinned, label: dictionary.enrollment.steps.provenance },
+              { id: 2, icon: Sparkles, label: dictionary.enrollment.steps.program },
+              { id: 3, icon: CreditCard, label: dictionary.enrollment.steps.payment },
             ].map((item) => {
               const Icon = item.icon;
               const active = step === item.id;
@@ -164,15 +163,15 @@ export default function EnrollmentWizard() {
             <div className="space-y-6">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">Etape 1</p>
-                <h3 className="mt-2 font-display text-3xl font-bold text-foreground">Provenance du patient</h3>
+                <h3 className="mt-2 font-display text-3xl font-bold text-foreground">{dictionary.enrollment.step1.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  Selectionnez le niveau territorial puis preparez l identifiant de reference du patient.
+                  {dictionary.enrollment.step1.description}
                 </p>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <label className="space-y-2">
-                  <span className="text-sm font-medium text-foreground">Region</span>
+                  <span className="text-sm font-medium text-foreground">{dictionary.common.region}</span>
                   <select className="input" value={form.region} onChange={(event) => handleRegionChange(event.target.value)}>
                     {Object.keys(cameroonLocations).map((region) => (
                       <option key={region} value={region}>
@@ -183,7 +182,7 @@ export default function EnrollmentWizard() {
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-sm font-medium text-foreground">Departement</span>
+                  <span className="text-sm font-medium text-foreground">{dictionary.common.department}</span>
                   <select
                     className="input"
                     value={form.department}
@@ -198,7 +197,7 @@ export default function EnrollmentWizard() {
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-sm font-medium text-foreground">Arrondissement</span>
+                  <span className="text-sm font-medium text-foreground">{dictionary.common.arrondissement}</span>
                   <select
                     className="input"
                     value={form.arrondissement}
@@ -213,13 +212,13 @@ export default function EnrollmentWizard() {
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-sm font-medium text-foreground">Village</span>
+                  <span className="text-sm font-medium text-foreground">{dictionary.common.village}</span>
                   <input
                     className="input"
                     type="text"
                     value={form.village}
                     onChange={(event) => updateField('village', event.target.value)}
-                    placeholder="Nom du village"
+                    placeholder={dictionary.enrollment.step1.villagePlaceholder}
                   />
                 </label>
               </div>
@@ -227,11 +226,11 @@ export default function EnrollmentWizard() {
               <div className="rounded-[28px] bg-surface-alt p-5">
                 <div className="flex flex-col gap-4 md:flex-row md:items-end">
                   <label className="flex-1 space-y-2">
-                    <span className="text-sm font-medium text-foreground">Numero patient suggere</span>
+                    <span className="text-sm font-medium text-foreground">{dictionary.enrollment.step1.patientCode}</span>
                     <input className="input bg-white" type="text" value={form.patientCode} onChange={(event) => updateField('patientCode', event.target.value)} />
                   </label>
                   <button type="button" className="btn" onClick={() => updateField('patientCode', createPatientCode())}>
-                    Regenerer
+                    {dictionary.enrollment.step1.regenerate}
                   </button>
                 </div>
               </div>
@@ -242,14 +241,14 @@ export default function EnrollmentWizard() {
             <div className="space-y-6">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">Etape 2</p>
-                <h3 className="mt-2 font-display text-3xl font-bold text-foreground">Association au programme</h3>
+                <h3 className="mt-2 font-display text-3xl font-bold text-foreground">{dictionary.enrollment.step2.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  Choisissez le programme CSU puis renseignez la fenetre de validite et le nombre de semaines de cheque sante.
+                  {dictionary.enrollment.step2.description}
                 </p>
               </div>
 
               <label className="space-y-2">
-                <span className="text-sm font-medium text-foreground">Programme</span>
+                <span className="text-sm font-medium text-foreground">{dictionary.common.program}</span>
                 <select className="input" value={form.programCode} onChange={(event) => handleProgramChange(event.target.value)}>
                   {csuPrograms.map((program) => (
                     <option key={program.code} value={program.code}>
@@ -261,22 +260,22 @@ export default function EnrollmentWizard() {
 
               <div className="rounded-[28px] bg-surface-alt p-5">
                 <p className="text-sm font-semibold text-foreground">{selectedProgram.target}</p>
-                <p className="mt-1 text-sm text-muted-foreground">Code programme: {selectedProgram.code}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{dictionary.enrollment.step2.programCode}: {selectedProgram.code}</p>
               </div>
 
               <div className="grid gap-4 md:grid-cols-3">
                 <label className="space-y-2">
-                  <span className="text-sm font-medium text-foreground">Date de debut</span>
+                  <span className="text-sm font-medium text-foreground">{dictionary.enrollment.step2.startDate}</span>
                   <input className="input" type="date" value={form.startDate} onChange={(event) => handleStartDateChange(event.target.value)} />
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-sm font-medium text-foreground">Date de fin</span>
+                  <span className="text-sm font-medium text-foreground">{dictionary.enrollment.step2.endDate}</span>
                   <input className="input" type="date" value={form.endDate} onChange={(event) => updateField('endDate', event.target.value)} />
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-sm font-medium text-foreground">Nombre de semaines</span>
+                  <span className="text-sm font-medium text-foreground">{dictionary.enrollment.step2.weeks}</span>
                   <input
                     className="input"
                     type="number"
@@ -294,20 +293,20 @@ export default function EnrollmentWizard() {
             <div className="space-y-6">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">Etape 3</p>
-                <h3 className="mt-2 font-display text-3xl font-bold text-foreground">Confirmation de paiement</h3>
+                <h3 className="mt-2 font-display text-3xl font-bold text-foreground">{dictionary.enrollment.step3.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  Enregistrez le paiement associe au programme selectionne et conservez la reference du recu.
+                  {dictionary.enrollment.step3.description}
                 </p>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <label className="space-y-2">
-                  <span className="text-sm font-medium text-foreground">Montant</span>
+                  <span className="text-sm font-medium text-foreground">{dictionary.common.amount}</span>
                   <input className="input" type="number" value={form.amount} onChange={(event) => updateField('amount', event.target.value)} />
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-sm font-medium text-foreground">Moyen de paiement</span>
+                  <span className="text-sm font-medium text-foreground">{dictionary.enrollment.step3.method}</span>
                   <select className="input" value={form.paymentMethod} onChange={(event) => updateField('paymentMethod', event.target.value as PaymentMethod)}>
                     {paymentMethods.map((method) => (
                       <option key={method.value} value={method.value}>
@@ -318,18 +317,18 @@ export default function EnrollmentWizard() {
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-sm font-medium text-foreground">Numero du recu</span>
+                  <span className="text-sm font-medium text-foreground">{dictionary.common.receiptNumber}</span>
                   <input
                     className="input"
                     type="text"
                     value={form.receiptNumber}
                     onChange={(event) => updateField('receiptNumber', event.target.value)}
-                    placeholder="REC-2026-0001"
+                    placeholder={dictionary.enrollment.step3.receiptPlaceholder}
                   />
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-sm font-medium text-foreground">Date de paiement</span>
+                  <span className="text-sm font-medium text-foreground">{dictionary.common.paymentDate}</span>
                   <input className="input" type="date" value={form.paymentDate} onChange={(event) => updateField('paymentDate', event.target.value)} />
                 </label>
               </div>
@@ -337,67 +336,72 @@ export default function EnrollmentWizard() {
           )}
 
           <div className="mt-8 flex items-center justify-between">
-            <button type="button" className="btn btn-ghost" disabled={step === 1} onClick={() => setStep((current) => Math.max(1, current - 1))}>
-              <ChevronLeft className="mr-2 h-4 w-4" />
-              Retour
-            </button>
+              <button type="button" className="btn btn-ghost" disabled={step === 1} onClick={() => setStep((current) => Math.max(1, current - 1))}>
+                <ChevronLeft className="mr-2 h-4 w-4" />
+              {dictionary.enrollment.actions.back}
+              </button>
 
             {step < 3 ? (
               <button type="button" className="btn btn-primary" onClick={() => setStep((current) => Math.min(3, current + 1))}>
-                Continuer
+                {dictionary.enrollment.actions.continue}
                 <ChevronRight className="ml-2 h-4 w-4" />
               </button>
             ) : (
               <button type="button" className="btn btn-primary">
                 <CheckCircle2 className="mr-2 h-4 w-4" />
-                Confirmer l enrolement
+                {dictionary.enrollment.actions.confirm}
               </button>
             )}
           </div>
         </div>
 
         <aside className="space-y-6">
+          <div className="overflow-hidden rounded-[32px] border border-border bg-white shadow-soft">
+            <div className="relative h-52">
+              <Image src="/minsante2.jpeg" alt="MINSANTE CSU" fill className="object-cover" />
+            </div>
+          </div>
+
           <div className="rounded-[32px] border border-border bg-white p-6 shadow-soft">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Recapitulatif</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">{dictionary.enrollment.summary.title}</p>
             <div className="mt-5 space-y-4 text-sm">
               <div className="rounded-3xl bg-surface-alt p-4">
-                <p className="text-muted-foreground">Localisation</p>
+                <p className="text-muted-foreground">{dictionary.enrollment.summary.location}</p>
                 <p className="mt-2 font-semibold text-foreground">
                   {form.region.replaceAll('_', ' ')} / {form.department.replaceAll('_', ' ')}
                 </p>
                 <p className="mt-1 text-foreground">{form.arrondissement}</p>
-                <p className="mt-1 text-muted-foreground">{form.village || 'Village non renseigne'}</p>
+                <p className="mt-1 text-muted-foreground">{form.village || dictionary.enrollment.summary.noVillage}</p>
               </div>
 
               <div className="rounded-3xl bg-surface-alt p-4">
-                <p className="text-muted-foreground">Identifiant patient</p>
+                <p className="text-muted-foreground">{dictionary.enrollment.summary.patientCode}</p>
                 <p className="mt-2 font-semibold text-foreground">{form.patientCode}</p>
               </div>
 
               <div className="rounded-3xl bg-surface-alt p-4">
-                <p className="text-muted-foreground">Programme</p>
+                <p className="text-muted-foreground">{dictionary.enrollment.summary.program}</p>
                 <p className="mt-2 font-semibold text-foreground">{selectedProgram.label}</p>
                 <p className="mt-1 text-muted-foreground">
                   {form.startDate} au {form.endDate}
                 </p>
-                <p className="mt-1 text-muted-foreground">{form.healthChequeWeeks} semaines</p>
+                <p className="mt-1 text-muted-foreground">{dictionary.enrollment.summary.weeks.replace('{count}', String(form.healthChequeWeeks))}</p>
               </div>
 
               <div className="rounded-3xl bg-surface-alt p-4">
-                <p className="text-muted-foreground">Paiement</p>
+                <p className="text-muted-foreground">{dictionary.enrollment.summary.payment}</p>
                 <p className="mt-2 font-semibold text-foreground">{form.amount} FCFA</p>
                 <p className="mt-1 text-muted-foreground">{form.paymentMethod}</p>
-                <p className="mt-1 text-muted-foreground">{form.receiptNumber || 'Recu non renseigne'}</p>
+                <p className="mt-1 text-muted-foreground">{form.receiptNumber || dictionary.enrollment.summary.noReceipt}</p>
                 <p className="mt-1 text-muted-foreground">{form.paymentDate}</p>
               </div>
             </div>
           </div>
 
           <div className="rounded-[32px] border border-border bg-white p-6 shadow-soft">
-            <p className="text-sm font-semibold text-foreground">Contexte CSU</p>
+            <p className="text-sm font-semibold text-foreground">{dictionary.enrollment.context.title}</p>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Les options proposees s appuient sur les cibles citees dans les publications officielles et para-officielles sur la CSU au Cameroun:
-              femmes enceintes, enfants de 0 a 5 ans, personnes vivant avec le VIH, tuberculose et dialyse.
+              {dictionary.enrollment.context.description}
             </p>
           </div>
         </aside>

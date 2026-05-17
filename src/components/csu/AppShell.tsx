@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -29,12 +30,16 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">{dictionary.shell.suiteLabel}</p>
               <h1 className="font-display text-2xl font-bold text-foreground">{dictionary.common.appName}</h1>
             </div>
-            <LayoutDashboard className="mt-1 h-5 w-5 text-primary" />
+            <div className="flex items-center gap-3">
+              <Image src="/minsante.png" alt="MINSANTE" width={44} height={44} className="rounded-2xl object-contain" />
+              <LayoutDashboard className="mt-1 h-5 w-5 text-primary" />
+            </div>
           </div>
 
           <div className="mt-6 rounded-3xl bg-surface-alt p-4">
             <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">{dictionary.common.connectedAs}</p>
             <p className="mt-2 text-lg font-semibold text-foreground">{user}</p>
+            <p className="mt-3 text-xs uppercase tracking-[0.22em] text-muted-foreground">{dictionary.shell.ministryLabel}</p>
             <p className="mt-1 text-sm text-muted-foreground">{dictionary.common.ministry}</p>
           </div>
 
