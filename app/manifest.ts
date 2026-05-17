@@ -15,14 +15,14 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ['medical', 'health', 'government'],
     icons: [
       {
-        src: '/logo-blanc.png',
+        src: '/ministere.png',
         sizes: '512x512',
         type: 'image/png',
       },
       {
-        src: '/favicon.ico',
+        src: '/ministere.png',
         sizes: '48x48',
-        type: 'image/x-icon',
+        type: 'image/png',
       },
     ],
   };
