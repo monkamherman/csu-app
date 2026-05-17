@@ -1,5 +1,5 @@
 const CACHE_NAME = 'csu-app-v1';
-const APP_SHELL = ['/', '/manifest.webmanifest', '/favicon.ico', '/logo-blanc.png'];
+const APP_SHELL = ['/', '/favicon.ico', '/minsante.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
