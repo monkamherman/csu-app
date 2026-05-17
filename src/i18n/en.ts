@@ -48,11 +48,9 @@ const en = {
   enrollment: {
     heroEyebrow: 'CSU Test Enrollment',
     heroTitle: 'Patient enrollment process in 3 steps',
-    heroDescription:
-      'Patient origin, CSU program assignment, then payment confirmation in one single workflow.',
+    heroDescription: 'Patient origin, CSU program assignment, then payment confirmation in one single workflow.',
     dashboardTitle: 'Patient enrollment dashboard',
-    dashboardDescription:
-      'Track files, quickly start a new patient record, and review enrollment records.',
+    dashboardDescription: 'Track files, quickly start a new patient record, and review enrollment records.',
     stats: {
       total: 'Enrolled patients',
       paid: 'Confirmed payments',
@@ -60,13 +58,13 @@ const en = {
     },
     cards: {
       newTitle: 'New enrollment',
-      newDescription:
-        'Launch the 3-step process to register a patient, assign a program, and confirm the payment.',
+      newDescription: 'Launch the 3-step process to register a patient, assign a program, and confirm the payment.',
       listTitle: 'Patient list',
       listDescription:
         'Browse existing records, search for a patient, and filter by region, program, or payment status.',
       opsTitle: 'Operational view',
-      opsDescription: 'Current split: {paid} paid, {pending} requiring action. Detailed routes are ready for daily supervision.',
+      opsDescription:
+        'Current split: {paid} paid, {pending} requiring action. Detailed routes are ready for daily supervision.',
     },
     steps: {
       provenance: 'Origin',
@@ -154,7 +152,11 @@ const en = {
       heroDescription: 'Track field campaigns, pending validations, and registration throughput across districts.',
       stats: ['Files today', 'Pending validations', 'Active districts'],
       actions: ['New enrollment', 'Import batch', 'Review validations'],
-      timeline: ['08:15 Field team briefing', '10:40 Mobile kit synchronization', '13:30 Quality control in central district'],
+      timeline: [
+        '08:15 Field team briefing',
+        '10:40 Mobile kit synchronization',
+        '13:30 Quality control in central district',
+      ],
     },
     claims: {
       name: 'Claims',
@@ -174,7 +176,11 @@ const en = {
       heroDescription: 'Follow intake capacity, clinical referrals, and continuity indicators with controlled access.',
       stats: ['Patients admitted', 'Pending referrals', 'Complete records'],
       actions: ['New intake', 'Verify referrals', 'Track continuity'],
-      timeline: ['09:00 Confidentiality review', '12:15 Clinical referral validation', '15:45 Follow-up appointment coordination'],
+      timeline: [
+        '09:00 Confidentiality review',
+        '12:15 Clinical referral validation',
+        '15:45 Follow-up appointment coordination',
+      ],
     },
   },
 } as const;

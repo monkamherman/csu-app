@@ -8,10 +8,7 @@ export async function POST(request: NextRequest) {
     const { imageId, options } = body;
 
     if (!imageId) {
-      return NextResponse.json(
-        { success: false, error: 'ID de l\'image requis' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: "ID de l'image requis" }, { status: 400 });
     }
 
     console.log('⚡ API: Optimisation image demandée:', imageId);
@@ -30,12 +27,12 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('💥 API Erreur optimisation image:', error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Erreur lors de l\'optimisation de l\'image',
-        details: error instanceof Error ? error.message : 'Erreur inconnue'
+      {
+        success: false,
+        error: "Erreur lors de l'optimisation de l'image",
+        details: error instanceof Error ? error.message : 'Erreur inconnue',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -5,7 +5,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(APP_SHELL);
-    })
+    }),
   );
   self.skipWaiting();
 });
@@ -19,9 +19,9 @@ self.addEventListener('activate', (event) => {
             return caches.delete(key);
           }
           return Promise.resolve();
-        })
-      )
-    )
+        }),
+      ),
+    ),
   );
   self.clients.claim();
 });
@@ -44,6 +44,6 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => caches.match('/'));
-    })
+    }),
   );
 });

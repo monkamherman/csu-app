@@ -21,12 +21,12 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('💥 API Erreur liste images:', error);
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: 'Erreur lors de la récupération des images',
-        details: error instanceof Error ? error.message : 'Erreur inconnue'
+        details: error instanceof Error ? error.message : 'Erreur inconnue',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -36,41 +36,32 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;
-    const folder = formData.get('folder') as string || 'uploads';
-    const tags = formData.get('tags') as string ? (formData.get('tags') as string).split(',') : [];
-    const metadata = formData.get('metadata') as string ? JSON.parse(formData.get('metadata') as string) : {};
+    const folder = (formData.get('folder') as string) || 'uploads';
+    const tags = (formData.get('tags') as string) ? (formData.get('tags') as string).split(',') : [];
+    const metadata = (formData.get('metadata') as string) ? JSON.parse(formData.get('metadata') as string) : {};
 
     if (!file) {
-      return NextResponse.json(
-        { success: false, error: 'Aucun fichier fourni' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: 'Aucun fichier fourni' }, { status: 400 });
     }
 
     // Validation du fichier
     const maxSize = 50 * 1024 * 1024; // 50MB
     if (file.size > maxSize) {
-      return NextResponse.json(
-        { success: false, error: 'Fichier trop volumineux (max 50MB)' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: 'Fichier trop volumineux (max 50MB)' }, { status: 400 });
     }
 
     // Validation du type
     const allowedTypes = ['image/', 'video/', 'application/pdf'];
-    const isAllowed = allowedTypes.some(type => file.type.startsWith(type));
+    const isAllowed = allowedTypes.some((type) => file.type.startsWith(type));
     if (!isAllowed) {
-      return NextResponse.json(
-        { success: false, error: 'Type de fichier non supporté' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: 'Type de fichier non supporté' }, { status: 400 });
     }
 
     console.log('📤 API: Upload image demandé');
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const imageService = await ImageService.getInstance();
-    
+
     const imageData = await imageService.uploadImage(buffer, file.name, {
       folder,
       tags,
@@ -84,12 +75,12 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('💥 API Erreur upload image:', error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Erreur lors de l\'upload',
-        details: error instanceof Error ? error.message : 'Erreur inconnue'
+      {
+        success: false,
+        error: "Erreur lors de l'upload",
+        details: error instanceof Error ? error.message : 'Erreur inconnue',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

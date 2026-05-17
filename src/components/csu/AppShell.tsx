@@ -27,7 +27,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <aside className="rounded-[32px] border border-border bg-white p-6 shadow-card">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">{dictionary.shell.suiteLabel}</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+                {dictionary.shell.suiteLabel}
+              </p>
               <h1 className="font-display text-2xl font-bold text-foreground">{dictionary.common.appName}</h1>
             </div>
             <div className="flex items-center gap-3">
@@ -39,7 +41,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <div className="mt-6 rounded-3xl bg-surface-alt p-4">
             <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">{dictionary.common.connectedAs}</p>
             <p className="mt-2 text-lg font-semibold text-foreground">{user}</p>
-            <p className="mt-3 text-xs uppercase tracking-[0.22em] text-muted-foreground">{dictionary.shell.ministryLabel}</p>
+            <p className="mt-3 text-xs uppercase tracking-[0.22em] text-muted-foreground">
+              {dictionary.shell.ministryLabel}
+            </p>
             <p className="mt-1 text-sm text-muted-foreground">{dictionary.common.ministry}</p>
           </div>
 
@@ -71,7 +75,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                         <Icon className="h-5 w-5" />
                       </div>
                       <div>
-                        <p className={`text-base font-semibold ${active ? 'text-white' : 'text-foreground'}`}>{labels.name}</p>
+                        <p className={`text-base font-semibold ${active ? 'text-white' : 'text-foreground'}`}>
+                          {labels.name}
+                        </p>
                         <p className={`mt-1 text-sm leading-5 ${active ? 'text-white/75' : 'text-muted-foreground'}`}>
                           {labels.description}
                         </p>
@@ -87,7 +93,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <PwaInstallButton />
           </div>
 
-          <Link href="/" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition hover:text-foreground">
+          <Link
+            href="/"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition hover:text-foreground"
+          >
             <LogOut className="h-4 w-4" />
             {dictionary.common.signOut}
           </Link>

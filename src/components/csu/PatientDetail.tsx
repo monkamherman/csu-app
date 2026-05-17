@@ -14,7 +14,10 @@ export default function PatientDetail({ patient, user }: { patient: PatientRecor
   return (
     <section className="space-y-6">
       <div className="flex items-center justify-between">
-        <Link href={`/apps/enrollment/patients${query}`} className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground">
+        <Link
+          href={`/apps/enrollment/patients${query}`}
+          className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground"
+        >
           <ArrowLeft className="h-4 w-4" />
           {dictionary.common.backToList}
         </Link>
@@ -26,7 +29,9 @@ export default function PatientDetail({ patient, user }: { patient: PatientRecor
       <div className="overflow-hidden rounded-[36px] bg-gradient-to-br from-primary to-primary-strong p-8 text-white shadow-card">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-sm uppercase tracking-[0.24em] text-white/72">{dictionary.enrollment.patientDetail.eyebrow}</p>
+            <p className="text-sm uppercase tracking-[0.24em] text-white/72">
+              {dictionary.enrollment.patientDetail.eyebrow}
+            </p>
             <h2 className="mt-3 font-display text-3xl font-bold md:text-5xl">
               {patient.firstName} {patient.lastName}
             </h2>
@@ -51,10 +56,18 @@ export default function PatientDetail({ patient, user }: { patient: PatientRecor
             <p className="font-semibold text-foreground">{dictionary.enrollment.patientDetail.originTitle}</p>
           </div>
           <div className="mt-5 space-y-2 text-sm text-muted-foreground">
-            <p>{dictionary.common.region}: {patient.region.replaceAll('_', ' ')}</p>
-            <p>{dictionary.common.department}: {patient.department.replaceAll('_', ' ')}</p>
-            <p>{dictionary.common.arrondissement}: {patient.arrondissement}</p>
-            <p>{dictionary.common.village}: {patient.village}</p>
+            <p>
+              {dictionary.common.region}: {patient.region.replaceAll('_', ' ')}
+            </p>
+            <p>
+              {dictionary.common.department}: {patient.department.replaceAll('_', ' ')}
+            </p>
+            <p>
+              {dictionary.common.arrondissement}: {patient.arrondissement}
+            </p>
+            <p>
+              {dictionary.common.village}: {patient.village}
+            </p>
           </div>
         </div>
 
@@ -64,10 +77,16 @@ export default function PatientDetail({ patient, user }: { patient: PatientRecor
             <p className="font-semibold text-foreground">{dictionary.enrollment.patientDetail.programTitle}</p>
           </div>
           <div className="mt-5 space-y-2 text-sm text-muted-foreground">
-            <p>{dictionary.enrollment.step2.programCode}: {patient.programCode}</p>
+            <p>
+              {dictionary.enrollment.step2.programCode}: {patient.programCode}
+            </p>
             <p className="font-medium text-foreground">{patient.programLabel}</p>
-            <p>{dictionary.enrollment.patientDetail.enrolledAt}: {patient.createdAt}</p>
-            <p>{dictionary.enrollment.patientDetail.validUntil}: {patient.validUntil}</p>
+            <p>
+              {dictionary.enrollment.patientDetail.enrolledAt}: {patient.createdAt}
+            </p>
+            <p>
+              {dictionary.enrollment.patientDetail.validUntil}: {patient.validUntil}
+            </p>
           </div>
         </div>
 
@@ -77,10 +96,19 @@ export default function PatientDetail({ patient, user }: { patient: PatientRecor
             <p className="font-semibold text-foreground">{dictionary.enrollment.patientDetail.paymentTitle}</p>
           </div>
           <div className="mt-5 space-y-2 text-sm text-muted-foreground">
-            <p>{dictionary.common.amount}: {patient.amount} FCFA</p>
-            <p>{dictionary.enrollment.patientDetail.method}: {patient.paymentMethod}</p>
-            <p>{dictionary.common.receiptNumber}: {patient.receiptNumber || dictionary.enrollment.patientDetail.notProvided}</p>
-            <p>{dictionary.enrollment.patientDetail.status}: {patient.paymentStatus}</p>
+            <p>
+              {dictionary.common.amount}: {patient.amount} FCFA
+            </p>
+            <p>
+              {dictionary.enrollment.patientDetail.method}: {patient.paymentMethod}
+            </p>
+            <p>
+              {dictionary.common.receiptNumber}:{' '}
+              {patient.receiptNumber || dictionary.enrollment.patientDetail.notProvided}
+            </p>
+            <p>
+              {dictionary.enrollment.patientDetail.status}: {patient.paymentStatus}
+            </p>
           </div>
         </div>
       </div>

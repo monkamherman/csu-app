@@ -36,7 +36,11 @@ export default function PwaInstallButton() {
   }, []);
 
   if (installed) {
-    return <div className="rounded-2xl bg-surface-alt px-4 py-3 text-sm font-semibold text-foreground">{dictionary.common.pwaInstalled}</div>;
+    return (
+      <div className="rounded-2xl bg-surface-alt px-4 py-3 text-sm font-semibold text-foreground">
+        {dictionary.common.pwaInstalled}
+      </div>
+    );
   }
 
   if (!promptEvent) {

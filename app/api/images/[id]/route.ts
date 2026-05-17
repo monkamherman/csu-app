@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ImageService } from '../../../../lib/image-service';
 
 // GET - Récupérer une image spécifique
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const imageId = params.id;
     console.log('🔍 API: Récupération image demandée:', imageId);
@@ -14,10 +11,7 @@ export async function GET(
     const image = await imageService.getImage(imageId);
 
     if (!image) {
-      return NextResponse.json(
-        { success: false, error: 'Image non trouvée' },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: 'Image non trouvée' }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -27,25 +21,22 @@ export async function GET(
   } catch (error) {
     console.error('💥 API Erreur récupération image:', error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Erreur lors de la récupération de l\'image',
-        details: error instanceof Error ? error.message : 'Erreur inconnue'
+      {
+        success: false,
+        error: "Erreur lors de la récupération de l'image",
+        details: error instanceof Error ? error.message : 'Erreur inconnue',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 // PUT - Mettre à jour une image
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const imageId = params.id;
     const body = await request.json();
-    
+
     console.log('🔄 API: Mise à jour image demandée:', imageId);
 
     const imageService = await ImageService.getInstance();
@@ -62,21 +53,18 @@ export async function PUT(
   } catch (error) {
     console.error('💥 API Erreur mise à jour image:', error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Erreur lors de la mise à jour de l\'image',
-        details: error instanceof Error ? error.message : 'Erreur inconnue'
+      {
+        success: false,
+        error: "Erreur lors de la mise à jour de l'image",
+        details: error instanceof Error ? error.message : 'Erreur inconnue',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 // DELETE - Supprimer une image
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const imageId = params.id;
     console.log('🗑️ API: Suppression image demandée:', imageId);
@@ -91,12 +79,12 @@ export async function DELETE(
   } catch (error) {
     console.error('💥 API Erreur suppression image:', error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Erreur lors de la suppression de l\'image',
-        details: error instanceof Error ? error.message : 'Erreur inconnue'
+      {
+        success: false,
+        error: "Erreur lors de la suppression de l'image",
+        details: error instanceof Error ? error.message : 'Erreur inconnue',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

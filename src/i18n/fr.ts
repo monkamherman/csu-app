@@ -40,7 +40,7 @@ const fr = {
     suiteLabel: 'Suite integree des operations sante',
     navigationTitle: 'Applications',
     dashboardTitle: 'Tableau de bord operationnel',
-    dashboardSubtitle: "Pilotage quotidien, continuite de service et execution coordonnee des programmes CSU.",
+    dashboardSubtitle: 'Pilotage quotidien, continuite de service et execution coordonnee des programmes CSU.',
     timelineTitle: 'Timeline',
     timelineSubtitle: 'Pulse operationnel',
     ministryLabel: 'Institution',
@@ -49,7 +49,7 @@ const fr = {
     heroEyebrow: 'Enrolement CSU Test',
     heroTitle: "Processus d'enrolement patient en 3 etapes",
     heroDescription:
-      "Provenance du patient, rattachement au programme CSU, puis confirmation du paiement dans un meme flux.",
+      'Provenance du patient, rattachement au programme CSU, puis confirmation du paiement dans un meme flux.',
     dashboardTitle: "Dashboard d'enrolement patient",
     dashboardDescription:
       "Suivi des dossiers, acces rapide a la creation d'un patient et consultation des fiches d'enrolement.",
@@ -61,12 +61,13 @@ const fr = {
     cards: {
       newTitle: 'Nouvel enrolement',
       newDescription:
-        "Lancer le processus en 3 etapes pour enregistrer un patient, rattacher un programme et confirmer le paiement.",
+        'Lancer le processus en 3 etapes pour enregistrer un patient, rattacher un programme et confirmer le paiement.',
       listTitle: 'Liste des patients',
       listDescription:
         'Parcourir les dossiers existants, rechercher un patient et filtrer par region, programme ou statut de paiement.',
       opsTitle: 'Vue operationnelle',
-      opsDescription: "Repartition actuelle: {paid} payes, {pending} avec action en attente. Les routes detaillees sont pretes pour le suivi quotidien.",
+      opsDescription:
+        'Repartition actuelle: {paid} payes, {pending} avec action en attente. Les routes detaillees sont pretes pour le suivi quotidien.',
     },
     steps: {
       provenance: 'Provenance',
@@ -152,30 +153,45 @@ const fr = {
       shortName: 'Enrolement',
       description: "Inscrire les menages, capturer l'eligibilite et suivre la performance d'onboarding.",
       heroTitle: "Tableau de bord d'enrolement des menages et beneficiaires",
-      heroDescription: "Suivez les campagnes terrain, les validations en attente et le debit d'inscription par district.",
+      heroDescription:
+        "Suivez les campagnes terrain, les validations en attente et le debit d'inscription par district.",
       stats: ['Dossiers du jour', 'Validations en attente', 'Districts actifs'],
       actions: ['Nouvel enrolement', 'Importer un lot', 'Voir les validations'],
-      timeline: ['08:15 Briefing des equipes terrain', '10:40 Synchronisation des kits mobiles', '13:30 Controle qualite district centre'],
+      timeline: [
+        '08:15 Briefing des equipes terrain',
+        '10:40 Synchronisation des kits mobiles',
+        '13:30 Controle qualite district centre',
+      ],
     },
     claims: {
       name: 'Claims',
       shortName: 'Claims',
       description: 'Superviser le pipeline de claims, les exceptions et la preparation des remboursements.',
       heroTitle: 'Tableau de bord de supervision des claims',
-      heroDescription: "Visualisez les volumes, les goulots de validation et la preparation des paiements prestataires.",
+      heroDescription:
+        'Visualisez les volumes, les goulots de validation et la preparation des paiements prestataires.',
       stats: ['Claims recus', 'Exceptions a revoir', 'Paiements prets'],
       actions: ['Revue des exceptions', 'Exporter le lot', 'Suivre les paiements'],
-      timeline: ['07:50 Import des flux prestataires', '11:10 Controle des duplicats', '16:20 Preparation du lot de remboursement'],
+      timeline: [
+        '07:50 Import des flux prestataires',
+        '11:10 Controle des duplicats',
+        '16:20 Preparation du lot de remboursement',
+      ],
     },
     hiv: {
       name: 'Enrolement VIH',
       shortName: 'VIH',
       description: "Coordonner l'enregistrement protege des patients VIH et la continuite de prise en charge.",
       heroTitle: "Tableau de bord d'admission des patients VIH",
-      heroDescription: "Suivez la capacite d'accueil, les orientations cliniques et les indicateurs de continuite avec acces controle.",
+      heroDescription:
+        "Suivez la capacite d'accueil, les orientations cliniques et les indicateurs de continuite avec acces controle.",
       stats: ['Patients admis', 'Orientations en attente', 'Dossiers complets'],
       actions: ['Nouvelle admission', 'Verifier les references', 'Suivre la continuite'],
-      timeline: ['09:00 Revue de confidentialite', '12:15 Validation des references cliniques', '15:45 Coordination des rendez-vous de suivi'],
+      timeline: [
+        '09:00 Revue de confidentialite',
+        '12:15 Validation des references cliniques',
+        '15:45 Coordination des rendez-vous de suivi',
+      ],
     },
   },
 } as const;

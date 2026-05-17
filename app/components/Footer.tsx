@@ -7,17 +7,31 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
             <h4 className="font-bold mb-4">RAGE AI</h4>
-            <p className="text-gray-400 text-sm">
-              Infrastructure Digitale Pilotée par IA
-            </p>
+            <p className="text-gray-400 text-sm">Infrastructure Digitale Pilotée par IA</p>
           </div>
           <div>
             <h4 className="font-bold mb-4">Services</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li><Link href="#modules" className="hover:text-white">Funnel AI</Link></li>
-              <li><Link href="#modules" className="hover:text-white">Automation</Link></li>
-              <li><Link href="#modules" className="hover:text-white">Content AI</Link></li>
-              <li><Link href="#modules" className="hover:text-white">Social AI</Link></li>
+              <li>
+                <Link href="#modules" className="hover:text-white">
+                  Funnel AI
+                </Link>
+              </li>
+              <li>
+                <Link href="#modules" className="hover:text-white">
+                  Automation
+                </Link>
+              </li>
+              <li>
+                <Link href="#modules" className="hover:text-white">
+                  Content AI
+                </Link>
+              </li>
+              <li>
+                <Link href="#modules" className="hover:text-white">
+                  Social AI
+                </Link>
+              </li>
             </ul>
           </div>
           <div>

@@ -26,7 +26,10 @@ export default function AppDashboard({ appId }: { appId: CsuAppId }) {
 
           <div className="grid gap-3 sm:grid-cols-3">
             {config.stats.map((stat, index) => (
-              <div key={labels.stats[index]} className="rounded-3xl border border-white/14 bg-white/10 p-4 backdrop-blur">
+              <div
+                key={labels.stats[index]}
+                className="rounded-3xl border border-white/14 bg-white/10 p-4 backdrop-blur"
+              >
                 <p className="text-sm text-white/75">{labels.stats[index]}</p>
                 <p className="mt-3 text-3xl font-bold">{stat.value}</p>
                 <p className="mt-2 text-sm text-white/80">{stat.change}</p>
@@ -43,12 +46,18 @@ export default function AppDashboard({ appId }: { appId: CsuAppId }) {
               <p className="text-sm font-semibold text-foreground">{dictionary.shell.dashboardSubtitle}</p>
               <p className="mt-1 text-sm text-muted-foreground">{labels.description}</p>
             </div>
-            <span className={`rounded-full px-3 py-1 text-xs font-semibold ${config.accent}`}>{dictionary.common.active}</span>
+            <span className={`rounded-full px-3 py-1 text-xs font-semibold ${config.accent}`}>
+              {dictionary.common.active}
+            </span>
           </div>
 
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {labels.actions.map((action) => (
-              <button key={action} type="button" className="rounded-3xl border border-border bg-surface-alt p-4 text-left transition hover:border-primary/30 hover:bg-white">
+              <button
+                key={action}
+                type="button"
+                className="rounded-3xl border border-border bg-surface-alt p-4 text-left transition hover:border-primary/30 hover:bg-white"
+              >
                 <div className="flex items-center justify-between gap-4">
                   <span className="text-sm font-semibold text-foreground">{action}</span>
                   <ArrowUpRight className="h-4 w-4 text-primary" />

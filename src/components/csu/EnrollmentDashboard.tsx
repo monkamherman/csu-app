@@ -51,37 +51,49 @@ export default function EnrollmentDashboard({ user }: { user: string }) {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/20 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6 text-white">
               <p className="text-sm uppercase tracking-[0.24em] text-white/70">{dictionary.common.ministry}</p>
-              <p className="mt-3 max-w-lg text-sm leading-6 text-white/85">{dictionary.enrollment.dashboardDescription}</p>
+              <p className="mt-3 max-w-lg text-sm leading-6 text-white/85">
+                {dictionary.enrollment.dashboardDescription}
+              </p>
             </div>
           </div>
         </div>
 
         <div className="grid gap-6">
-        <Link href={`/apps/enrollment/new${query}`} className="rounded-[32px] border border-border bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-card">
-          <FilePlus2 className="h-10 w-10 text-primary" />
-          <h3 className="mt-5 font-display text-2xl font-bold text-foreground">{dictionary.enrollment.cards.newTitle}</h3>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            {dictionary.enrollment.cards.newDescription}
-          </p>
-        </Link>
+          <Link
+            href={`/apps/enrollment/new${query}`}
+            className="rounded-[32px] border border-border bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-card"
+          >
+            <FilePlus2 className="h-10 w-10 text-primary" />
+            <h3 className="mt-5 font-display text-2xl font-bold text-foreground">
+              {dictionary.enrollment.cards.newTitle}
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">{dictionary.enrollment.cards.newDescription}</p>
+          </Link>
 
-        <Link href={`/apps/enrollment/patients${query}`} className="rounded-[32px] border border-border bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-card">
-          <Users2 className="h-10 w-10 text-secondary" />
-          <h3 className="mt-5 font-display text-2xl font-bold text-foreground">{dictionary.enrollment.cards.listTitle}</h3>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            {dictionary.enrollment.cards.listDescription}
-          </p>
-        </Link>
+          <Link
+            href={`/apps/enrollment/patients${query}`}
+            className="rounded-[32px] border border-border bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-card"
+          >
+            <Users2 className="h-10 w-10 text-secondary" />
+            <h3 className="mt-5 font-display text-2xl font-bold text-foreground">
+              {dictionary.enrollment.cards.listTitle}
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              {dictionary.enrollment.cards.listDescription}
+            </p>
+          </Link>
 
-        <div className="rounded-[32px] border border-border bg-white p-6 shadow-soft">
-          <ListFilter className="h-10 w-10 text-tertiary" />
-          <h3 className="mt-5 font-display text-2xl font-bold text-foreground">{dictionary.enrollment.cards.opsTitle}</h3>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            {dictionary.enrollment.cards.opsDescription
-              .replace('{paid}', String(paidPatients))
-              .replace('{pending}', String(pendingPatients))}
-          </p>
-        </div>
+          <div className="rounded-[32px] border border-border bg-white p-6 shadow-soft">
+            <ListFilter className="h-10 w-10 text-tertiary" />
+            <h3 className="mt-5 font-display text-2xl font-bold text-foreground">
+              {dictionary.enrollment.cards.opsTitle}
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              {dictionary.enrollment.cards.opsDescription
+                .replace('{paid}', String(paidPatients))
+                .replace('{pending}', String(pendingPatients))}
+            </p>
+          </div>
         </div>
       </div>
     </section>

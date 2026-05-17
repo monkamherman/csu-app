@@ -17,7 +17,7 @@ export async function GET() {
     console.error('💥 Erreur récupération background:', error);
     return NextResponse.json(
       { success: false, error: 'Erreur lors de la récupération du background' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -29,15 +29,12 @@ export async function POST(request: NextRequest) {
     const { backgroundImage } = body;
 
     if (typeof backgroundImage !== 'string') {
-      return NextResponse.json(
-        { success: false, error: 'URL de background invalide' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: 'URL de background invalide' }, { status: 400 });
     }
 
     // Simuler la sauvegarde en base de données
     heroBackground = backgroundImage;
-    
+
     console.log('🎨 Background Hero mis à jour:', backgroundImage);
 
     return NextResponse.json({
@@ -48,10 +45,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('💥 Erreur mise à jour background:', error);
-    return NextResponse.json(
-      { success: false, error: 'Erreur lors de la mise à jour du background' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: 'Erreur lors de la mise à jour du background' }, { status: 500 });
   }
 }
 
@@ -67,9 +61,6 @@ export async function DELETE() {
     });
   } catch (error) {
     console.error('💥 Erreur suppression background:', error);
-    return NextResponse.json(
-      { success: false, error: 'Erreur lors de la suppression du background' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: 'Erreur lors de la suppression du background' }, { status: 500 });
   }
 }

@@ -17,28 +17,29 @@ export default function PatientList({ user }: { user: string }) {
 
   const regions = useMemo(
     (): string[] => [allRegionsLabel, ...Array.from(new Set(patientRecords.map((patient) => patient.region)))],
-    [allRegionsLabel]
+    [allRegionsLabel],
   );
 
   const filteredPatients = useMemo(() => {
     const needle = search.toLowerCase().trim();
 
     return patientRecords.filter((patient) => {
-      const matchesStatus = status === dictionary.enrollment.patientList.allStatuses || patient.paymentStatus === status;
+      const matchesStatus =
+        status === dictionary.enrollment.patientList.allStatuses || patient.paymentStatus === status;
       const matchesRegion = region === dictionary.enrollment.patientList.allRegions || patient.region === region;
-      const haystack = [
-        patient.patientCode,
-        patient.firstName,
-        patient.lastName,
-        patient.programLabel,
-        patient.village,
-      ]
+      const haystack = [patient.patientCode, patient.firstName, patient.lastName, patient.programLabel, patient.village]
         .join(' ')
         .toLowerCase();
 
       return matchesStatus && matchesRegion && (!needle || haystack.includes(needle));
     });
-  }, [dictionary.enrollment.patientList.allRegions, dictionary.enrollment.patientList.allStatuses, region, search, status]);
+  }, [
+    dictionary.enrollment.patientList.allRegions,
+    dictionary.enrollment.patientList.allStatuses,
+    region,
+    search,
+    status,
+  ]);
 
   const query = `?user=${encodeURIComponent(user)}`;
 
@@ -47,8 +48,12 @@ export default function PatientList({ user }: { user: string }) {
       <div className="rounded-[36px] border border-border bg-white p-8 shadow-card">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-sm uppercase tracking-[0.24em] text-primary">{dictionary.enrollment.patientList.eyebrow}</p>
-            <h2 className="mt-3 font-display text-3xl font-bold text-foreground md:text-5xl">{dictionary.enrollment.patientList.title}</h2>
+            <p className="text-sm uppercase tracking-[0.24em] text-primary">
+              {dictionary.enrollment.patientList.eyebrow}
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-bold text-foreground md:text-5xl">
+              {dictionary.enrollment.patientList.title}
+            </h2>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
               {dictionary.enrollment.patientList.description}
             </p>
@@ -130,7 +135,10 @@ export default function PatientList({ user }: { user: string }) {
                   </td>
                   <td className="px-6 py-4 text-muted-foreground">{patient.validUntil}</td>
                   <td className="px-6 py-4 text-right">
-                    <Link href={`/apps/enrollment/patients/${patient.id}${query}`} className="text-sm font-semibold text-primary">
+                    <Link
+                      href={`/apps/enrollment/patients/${patient.id}${query}`}
+                      className="text-sm font-semibold text-primary"
+                    >
                       {dictionary.enrollment.patientList.table.detail}
                     </Link>
                   </td>

@@ -79,9 +79,8 @@ export class ImageService {
       }
 
       return new Promise((resolve, reject) => {
-        cloudinary.uploader.upload_stream(
-          uploadOptions,
-          async (error, result) => {
+        cloudinary.uploader
+          .upload_stream(uploadOptions, async (error, result) => {
             if (error) {
               console.error('❌ Erreur upload:', error);
               reject(new Error(`Erreur upload: ${error.message}`));
@@ -111,8 +110,8 @@ export class ImageService {
 
             console.log('✅ Upload réussi:', imageData.id);
             resolve(imageData);
-          }
-        ).end(file);
+          })
+          .end(file);
       });
     } catch (error) {
       console.error('💥 Erreur upload image:', error);
@@ -132,7 +131,7 @@ export class ImageService {
 
       // Récupérer depuis Cloudinary
       const result = await cloudinary.api.resource(imageId);
-      
+
       const imageData: ImageData = {
         id: result.public_id,
         public_id: result.public_id,
@@ -177,7 +176,7 @@ export class ImageService {
       }
 
       const result = await cloudinary.api.resources(options);
-      
+
       const images: ImageData[] = result.resources.map((resource: any) => ({
         id: resource.public_id,
         public_id: resource.public_id,
@@ -255,7 +254,7 @@ export class ImageService {
       console.log('🗑️ Suppression image:', imageId);
 
       await cloudinary.api.delete_resources([imageId]);
-      
+
       // Supprimer du cache
       await this.cacheService.removeCachedImage(imageId);
 
@@ -268,13 +267,16 @@ export class ImageService {
   }
 
   // Obtenir l'URL optimisée d'une image
-  getOptimizedUrl(imageId: string, options: {
-    width?: number;
-    height?: number;
-    quality?: number;
-    format?: string;
-    crop?: string;
-  } = {}): string {
+  getOptimizedUrl(
+    imageId: string,
+    options: {
+      width?: number;
+      height?: number;
+      quality?: number;
+      format?: string;
+      crop?: string;
+    } = {},
+  ): string {
     const transformation = cloudinary.url(imageId, {
       width: options.width,
       height: options.height,
